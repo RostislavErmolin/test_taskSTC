@@ -1,0 +1,82 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+@using task.Models
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Анализ частоты символов в файле</MudText>
+        </CardHeaderContent>
+    </MudCardHeader>
+    <MudCardContent>
+        <!-- Зона загрузки файла -->
+        <div class="upload-zone">
+            <div class="upload-zone-content">
+                <MudIcon Icon="@Icons.Material.Filled.CloudUpload" Size="Size.Large" Color="Color.Primary" />
+                <MudText Typo="Typo.h5" Class="mt-3">Выберите файл для анализа</MudText>
+                <InputFile id="fileInput" OnChange="HandleFileSelected" accept=".txt,.log,.csv,.json,.md" hidden />
+                <MudButton HtmlTag="label"
+                           Variant="Variant.Filled"
+                           Color="Color.Primary"
+                           Size="Size.Large"
+                           StartIcon="@Icons.Material.Filled.AttachFile"
+                           for="fileInput"
+                           Class="mt-4">
+                    Выбрать файл
+                </MudButton>
+                <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mt-3">
+                    Поддерживаются текстовые файлы любого размера (.txt, .log, .csv, .json, .md)
+                </MudText>
+            </div>
+        </div>
+
+        <!-- Информация о выбранном файле -->
+        @if (SelectedFile != null)
+        {
+            <MudPaper Elevation="2" Class="pa-4 mt-4">
+                <div class="d-flex align-center justify-space-between mb-3">
+                    <div class="d-flex align-center">
+                        <MudIcon Icon="@Icons.Material.Filled.Description" Color="Color.Primary" Size="Size.Large" Class="mr-3" />
+                        <div>
+                            <MudText Typo="Typo.h6">@SelectedFile.Name</MudText>
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">@FormatFileSize(SelectedFile.Size)</MudText>
+                        </div>
+                    </div>
+                    <MudIconButton Icon="@Icons.Material.Filled.Close"
+                                   Color="Color.Default"
+                                   OnClick="ClearFile"
+                                   aria-label="Удалить файл" />
+                </div>
+                <MudButton Variant="Variant.Filled"
+                           Color="Color.Success"
+                           FullWidth="true"
+                           Size="Size.Large"
+                           StartIcon="@Icons.Material.Filled.PlayArrow"
+                           OnClick="StartAnalysis">
+                    Начать анализ
+                </MudButton>
+            </MudPaper>
+        }
+    </MudCardContent>
+</MudCard>
+
+<style>
+    .upload-zone {
+        border: 0.125rem dashed var(--mud-palette-lines-default);
+        border-radius: 0.5rem;
+        padding: 4rem 2.5rem;
+        text-align: center;
+        background: var(--mud-palette-background-grey);
+        transition: all 0.3s ease;
+    }
+
+    .upload-zone:hover {
+        border-color: var(--mud-palette-primary);
+        background: var(--mud-palette-action-default-hover);
+    }
+
+    .upload-zone-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>

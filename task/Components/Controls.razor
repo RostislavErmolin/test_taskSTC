@@ -1,0 +1,17 @@
+﻿@using task.Models
+<MudPaper Class="pa-4 text-center">
+    <MudButtonGroup Variant="Variant.Filled" Size="Size.Large">
+        <MudButton Color="@(IsRunning ? Color.Warning : Color.Primary)"
+                   StartIcon="@(IsRunning ? Icons.Material.Filled.Pause : Icons.Material.Filled.PlayArrow)"
+                   OnClick="HandlePlayPause"
+                   Disabled="@(Status == ConnectionStatus.Connecting)">
+            @(IsRunning ? "Пауза" : "Старт")
+        </MudButton>
+
+        <MudButton Color="Color.Error"
+                   StartIcon="@Icons.Material.Filled.Refresh"
+                   OnClick="HandleReset">
+            Сброс
+        </MudButton>
+    </MudButtonGroup>
+</MudPaper>

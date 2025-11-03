@@ -1,0 +1,11 @@
+﻿@page "/"
+
+@code {
+    protected override void OnInitialized()
+    {
+        // Перенаправляем на Task1
+        NavigationManager.NavigateTo("/task1", true);
+    }
+}
+
+@inject NavigationManager NavigationManager

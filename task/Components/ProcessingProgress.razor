@@ -1,0 +1,91 @@
+﻿@using task.Models
+
+@if (ProgressData != null && ProgressData.Status != ProcessingStatusEnum.Idle)
+{
+    <MudCard Class="mt-4">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <div class="d-flex align-center justify-space-between">
+                    <MudText Typo="Typo.h6">Прогресс обработки</MudText>
+                    <MudChip T="string" Color="@GetStatusColor()" Size="Size.Small">
+                        @GetStatusText()
+                    </MudChip>
+                </div>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <!-- Progress Bar -->
+            <div class="mb-4">
+                <MudProgressLinear Color="@(ProgressData.Status == ProcessingStatusEnum.Completed ? Color.Success : Color.Primary)"
+                                   Value="@ProgressData.Percentage"
+                                   Size="Size.Large"
+                                   Class="mb-2" />
+                <MudText Align="Align.Center" Typo="Typo.body1">
+                    <strong>@($"{ProgressData.Percentage:F1}%")</strong>
+                </MudText>
+            </div>
+
+            <!-- Детальная информация -->
+            @if (ProgressData.Status == ProcessingStatusEnum.Processing || ProgressData.Status == ProcessingStatusEnum.Completed)
+            {
+                <MudPaper Elevation="0" Class="pa-3" Style="background-color: var(--mud-palette-background-grey);">
+                    <MudGrid>
+                        <MudItem xs="12" sm="6">
+                            <MudText Typo="Typo.body2" Color="Color.Secondary">Обработано:</MudText>
+                            <MudText Typo="Typo.body1">
+                                <strong>@FormatBytes(ProgressData.BytesProcessed)</strong> / @FormatBytes(ProgressData.TotalBytes)
+                            </MudText>
+                        </MudItem>
+
+                        @if (ProgressData.CurrentChunk.HasValue && ProgressData.TotalChunks.HasValue)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">Фрагменты:</MudText>
+                                <MudText Typo="Typo.body1">
+                                    <strong>@ProgressData.CurrentChunk</strong> / @ProgressData.TotalChunks
+                                </MudText>
+                            </MudItem>
+                        }
+
+                        @if (ProgressData.Status == ProcessingStatusEnum.Processing)
+                        {
+                            <MudItem xs="12" sm="6">
+                                <MudText Typo="Typo.body2" Color="Color.Secondary">Скорость:</MudText>
+                                <MudText Typo="Typo.body1">
+                                    <strong>@FormatSpeed(ProgressData.Speed)</strong>
+                                </MudText>
+                            </MudItem>
+
+                            @if (ProgressData.Eta > 0)
+                            {
+                                <MudItem xs="12" sm="6">
+                                    <MudText Typo="Typo.body2" Color="Color.Secondary">Осталось:</MudText>
+                                    <MudText Typo="Typo.body1">
+                                        <strong>@FormatTime(ProgressData.Eta)</strong>
+                                    </MudText>
+                                </MudItem>
+                            }
+                        }
+                    </MudGrid>
+                </MudPaper>
+            }
+
+            <!-- Индикатор обработки -->
+            @if (ProgressData.Status == ProcessingStatusEnum.Processing)
+            {
+                <MudPaper Elevation="0" Class="pa-3 mt-3 d-flex align-center" Style="background-color: #e3f2fd;">
+                    <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" Class="mr-2" />
+                    <MudText Color="Color.Primary">Анализ символов...</MudText>
+                </MudPaper>
+            }
+
+            <!-- Сообщение о завершении -->
+            @if (ProgressData.Status == ProcessingStatusEnum.Completed)
+            {
+                <MudAlert Severity="Severity.Success" Class="mt-3" Icon="@Icons.Material.Filled.CheckCircle">
+                    Обработка завершена успешно!
+                </MudAlert>
+            }
+        </MudCardContent>
+    </MudCard>
+}

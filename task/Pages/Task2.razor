@@ -1,0 +1,53 @@
+﻿@page "/task2"
+@using Microsoft.AspNetCore.Components.Forms
+@using task.Components
+@using task.Models
+@using task.Services
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudPaper Elevation="0" Class="pa-4 mb-4">
+        <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">
+            Анализатор частоты символов
+        </MudText>
+        <MudText Typo="Typo.body1" Align="Align.Center" Color="Color.Secondary">
+            Загрузите текстовый файл любого размера для анализа частоты встречающихся символов
+        </MudText>
+    </MudPaper>
+
+    <!-- Компонент загрузки файла -->
+    @if (!IsProcessing && Result == null)
+    {
+        <FileUploadCard OnFileSelected="HandleFileSelected" />
+    }
+
+    <!-- Сообщение об ошибке -->
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <MudAlert Severity="Severity.Error"
+                  Class="mt-4"
+                  CloseIcon="@Icons.Material.Filled.Close"
+                  CloseIconClicked="ClearError">
+            <strong>Ошибка:</strong> @ErrorMessage
+        </MudAlert>
+    }
+
+    <!-- Компонент прогресса -->
+    <ProcessingProgress ProgressData="@CurrentProgress" />
+
+    <!-- Компонент результатов -->
+    <FrequencyChart Result="@Result" />
+
+    <!-- Кнопка нового анализа -->
+    @if (Result != null)
+    {
+        <MudPaper Class="pa-4 mt-4 text-center">
+            <MudButton Variant="Variant.Outlined"
+                       Color="Color.Primary"
+                       Size="Size.Large"
+                       StartIcon="@Icons.Material.Filled.Refresh"
+                       OnClick="ResetAnalysis">
+                Проанализировать другой файл
+            </MudButton>
+        </MudPaper>
+    }
+</MudContainer>

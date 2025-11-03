@@ -1,0 +1,14 @@
+﻿<MudCard>
+    <MudCardContent Class="text-center">
+        <MudText Typo="Typo.overline" Color="Color.Secondary" Class="mb-2">
+            @Title
+        </MudText>
+        <MudText Typo="Typo.h3" Class="my-3">
+            @(Value.HasValue ? Value.Value.ToString("F2") : "—")
+        </MudText>
+        <MudText Typo="Typo.caption" Color="Color.Secondary">
+            @Label
+        </MudText>
+    </MudCardContent>
+</MudCard>
+

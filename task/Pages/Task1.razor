@@ -1,0 +1,21 @@
+﻿@page "/task1"
+@using task.Components
+@using task.Models
+@using task.Services
+@inject DataManagerService DataManager
+@implements IDisposable
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="py-4">
+    <DashboardHeader Status="@DataManager.ConnectionStatus" />
+    
+    <CurrentNumberCard Value="@DataManager.CurrentNumber" />
+    
+    <StatisticsGrid Statistics="@DataManager.Statistics" />
+    
+    <NumbersChart Numbers="@DataManager.Last10Numbers" />
+    
+    <Controls Status="@DataManager.ConnectionStatus"
+              OnPlayPause="@EventCallback.Factory.Create(this, HandlePlayPause)"
+              OnReset="@EventCallback.Factory.Create(this, DataManager.Reset)" />
+</MudContainer>
+

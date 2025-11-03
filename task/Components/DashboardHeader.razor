@@ -1,0 +1,19 @@
+﻿@using task.Models
+
+<MudPaper Class="pa-4 mb-4" Style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+    <MudGrid Justify="Justify.SpaceBetween" Class="align-center">
+        <MudItem>
+            <MudText Typo="Typo.h4" Style="color: white; font-weight: 700;">
+                Random Number Monitor
+            </MudText>
+        </MudItem>
+        <MudItem>
+            <MudChip T="string"
+                     Color="@GetStatusColor()"
+                     Icon="@GetStatusIcon()"
+                     Style="color: white;">
+                @GetStatusText()
+            </MudChip>
+        </MudItem>
+    </MudGrid>
+</MudPaper>

@@ -1,0 +1,20 @@
+﻿@using task.Models
+<MudGrid Class="my-4">
+    <MudItem xs="12" sm="4">
+        <StatCard Title="10 СЕКУНД"
+                  Value="@Statistics?.Avg10Seconds"
+                  Label="среднее" />
+    </MudItem>
+
+    <MudItem xs="12" sm="4">
+        <StatCard Title="1 МИНУТА"
+                  Value="@Statistics?.Avg1Minute"
+                  Label="среднее" />
+    </MudItem>
+
+    <MudItem xs="12" sm="4">
+        <StatCard Title="ВСЁ ВРЕМЯ"
+                  Value="@Statistics?.AvgAllTime"
+                  Label="среднее" />
+    </MudItem>
+</MudGrid>

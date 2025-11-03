@@ -1,0 +1,11 @@
+﻿@using task.Models
+
+<MudCard Class="mb-4" Style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+    <MudCardContent Class="text-center py-6">
+        <MudText Typo="Typo.overline" Class="mb-2">Текущее число</MudText>
+        <MudText Typo="Typo.h1" Class="my-4">
+            @(Value?.ToString() ?? "—")
+        </MudText>
+        <MudText Typo="Typo.caption">Обновляется каждую секунду</MudText>
+    </MudCardContent>
+</MudCard>
